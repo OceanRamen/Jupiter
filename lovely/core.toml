@@ -1,0 +1,25 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.module]
+source = "dkjson.lua"
+before = "main.lua"
+name = "dkjson"
+
+[[patches]]
+[patches.copy]
+target = "main.lua"
+position = "append"
+sources = ["core/core.lua"]
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self:load_profile(G.SETTINGS.profile or 1)"
+position = "after"
+payload = "J:start_up()"
+match_indent = true
+overwrite = false

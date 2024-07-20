@@ -13,7 +13,6 @@ function Jupiter:set_globals()
   self.http = require("socket.http")
   self.json = require("dkjson")
   self.mime = require("mime")
-  self.ltn12 = require("ltn12")
 
   print("Jupiter loaded")
 end

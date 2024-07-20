@@ -57,7 +57,7 @@ function Jupiter:emit_joker_data()
 		J.http.request {
 			url = 'http://localhost:8881/submitCardData',
 			method = 'POST',
-			source = J.ltn12.source.string(request_payload),
+			source = ltn12.source.string(request_payload),
 			headers = request_headers
 		}
 	end

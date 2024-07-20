@@ -39,11 +39,26 @@ function Jupiter:emit_joker_data()
 			}
 		end
 
-		if not J.twitch_user or not J.api_key then return end
+		if not J.twitch_user or not J.api_key then
+			return
+		end
 
-		J.http.request(
-			'http://localhost:8881/',
-			J.json.encode(jokermap)
-		)
+		local request_headers = {}
+		local request_payload = J.json.encode({
+			joker_data = jokermap,
+			time_seconds = os.time()
+		})
+
+		request_headers['Content-Type'] = "application/json"
+		request_headers['Authorization'] = "Basic " .. (J.mime.b64(J.twitch_user .. ":" .. J.api_key))
+		request_headers['Content-Length'] = request_payload:len()
+
+		-- How do I make this nonblocking?
+		J.http.request {
+			url = 'http://localhost:8881/submitCardData',
+			method = 'POST',
+			source = J.ltn12.source.string(request_payload),
+			headers = request_headers
+		}
 	end
 end

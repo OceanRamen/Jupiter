@@ -22,6 +22,12 @@ position = "append"
 sources = ["core/core.lua"]
 
 [[patches]]
+[patches.copy]
+target = "card.lua"
+position = "append"
+sources = ["localization.lua"]
+
+[[patches]]
 [patches.pattern]
 target = "game.lua"
 pattern = "self:load_profile(G.SETTINGS.profile or 1)"
@@ -29,3 +35,11 @@ position = "after"
 payload = "J:start_up()"
 match_indent = true
 overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = 'G.GAME.current_round.hands_played = G.GAME.current_round.hands_played + 1'
+position = 'before'
+match_indent = false
+payload = "J.emit_joker_data()"
